@@ -86,3 +86,7 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/macos,unity,windows
+JourneyToTheHorizon/.vs/JourneyToTheHorizon/v15/Server/sqlite3/db.lock
+JourneyToTheHorizon/.vs/JourneyToTheHorizon/v15/Server/sqlite3/storage.ide
+JourneyToTheHorizon/.vs/JourneyToTheHorizon/v15/Server/sqlite3/storage.ide-shm
+JourneyToTheHorizon/.vs/JourneyToTheHorizon/v15/Server/sqlite3/storage.ide-wal

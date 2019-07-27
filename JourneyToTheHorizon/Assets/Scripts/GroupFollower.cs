@@ -5,7 +5,8 @@ using UnityEngine.AI;
 
 public class GroupFollower : MonoBehaviour
 {
-    [SerializeField] private Transform player;
+    [SerializeField] private LineLeader player;
+    [SerializeField] private int virtualFollowerIdx;
     private NavMeshAgent agent;
 
     // Start is called before the first frame update
@@ -17,6 +18,6 @@ public class GroupFollower : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        agent.SetDestination( player.position );
+		agent.SetDestination( player.GetFollowerLocation( virtualFollowerIdx, 0.0f ) );
     }
 }

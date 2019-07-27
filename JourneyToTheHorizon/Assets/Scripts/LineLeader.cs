@@ -74,18 +74,21 @@ public class LineLeader : MonoBehaviour
         PushCurrentLocation();
     }
 
-    public Vector3 GetFollowerLocation( int followerIdx )
+    public Vector3 GetFollowerLocation( int followerIdx, float rightOffset )
     {
         if ( leaderPath.Count == 0 )
         {
-            return transform.position;
+            return transform.position + transform.right * rightOffset;
         }
 
         float targetDist = ( followerIdx + 1 ) * followerPadding;
         float totalDistAtCurrWaypoint = Vector3.Distance( transform.position, leaderPath[0] );
         if ( totalDistAtCurrWaypoint >= targetDist )
         {
-            return Vector3.Lerp( transform.position, leaderPath[0], targetDist / totalDistAtCurrWaypoint );
+			Vector3 result = Vector3.Lerp( transform.position, leaderPath[0], targetDist / totalDistAtCurrWaypoint );
+			Vector3 diff = transform.position - leaderPath[0];
+			result += Vector3.Cross( Vector3.up, diff.normalized ) * rightOffset;
+			return result;
         }
 
         for ( int currWayPoint = 0; currWayPoint < leaderPath.Count - 1; currWayPoint++ )
@@ -93,11 +96,26 @@ public class LineLeader : MonoBehaviour
             float currSegmentLength = Vector3.Distance( leaderPath[currWayPoint], leaderPath[currWayPoint + 1] );
             if ( totalDistAtCurrWaypoint + currSegmentLength > targetDist )
             {
-                return Vector3.Lerp( leaderPath[currWayPoint], leaderPath[currWayPoint + 1], ( targetDist - totalDistAtCurrWaypoint ) / currSegmentLength );
-            }
+				Vector3 result = Vector3.Lerp( leaderPath[currWayPoint], leaderPath[currWayPoint + 1], ( targetDist - totalDistAtCurrWaypoint ) / currSegmentLength );
+				Vector3 diff = leaderPath[currWayPoint] - leaderPath[currWayPoint + 1];
+				result += Vector3.Cross( Vector3.up, diff.normalized ) * rightOffset;
+				return result;
+			}
             totalDistAtCurrWaypoint += currSegmentLength;
         }
 
+		Vector3 finalResult;
+		finalResult = leaderPath[leaderPath.Count - 1];
+		if ( leaderPath.Count > 1 )
+		{
+			Vector3 diff = leaderPath[leaderPath.Count - 2] - leaderPath[leaderPath.Count - 1];
+			finalResult += Vector3.Cross( Vector3.up, diff.normalized ) * rightOffset;
+		}
+		else
+		{
+			Vector3 diff = transform.position - leaderPath[0];
+			finalResult += Vector3.Cross( Vector3.up, diff.normalized ) * rightOffset;
+		}
         return leaderPath[leaderPath.Count - 1];
     }
 }

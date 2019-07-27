@@ -8,8 +8,11 @@ public class TerrainSpawner : MonoBehaviour
     [SerializeField] private GameObject playerCharacter;
     [SerializeField] private Vector3 centerAdjust = new Vector3( 50.0f, 0.0f, 50.0f );
     [SerializeField] private Vector3 spawnExtents = new Vector3( 40.0f, 0.0f, 40.0f );
+    [SerializeField] private Vector3 spawnLimits = new Vector3( 50.0f, 0.0f, 50.0f );
     [SerializeField] private Vector3 spawnOffset = new Vector3( 100.0f, 0.0f, 100.0f );
     [SerializeField] private float despawnDist = 200.0f;
+    [SerializeField] private bool enableSpawn = true;
+    [SerializeField] private Vector3 debugPlayerDist = new Vector3();
 
     // Going clockwise (looking towards -Y) starting at +X
     private TerrainSpawner[] terrainNeighbors = { null, null, null, null, null, null, null, null };
@@ -26,11 +29,12 @@ public class TerrainSpawner : MonoBehaviour
         if ( playerCharacter != null )
         {
             Vector3 vPlayerDistance = playerCharacter.transform.position - transform.position - centerAdjust;
+            debugPlayerDist = vPlayerDistance;
             if ( vPlayerDistance.magnitude > despawnDist )
             {
                 Destroy( gameObject );
             }
-            else if ( terrainPrefabs.Length > 0 )
+            else if ( terrainPrefabs.Length > 0 && enableSpawn && Mathf.Abs( vPlayerDistance.x ) < spawnLimits.x && Mathf.Abs( vPlayerDistance.z ) < spawnLimits.z )
             {
                 float sameX, sameY, sameZ, posX, posZ, negX, negZ;
                 sameX = transform.position.x;

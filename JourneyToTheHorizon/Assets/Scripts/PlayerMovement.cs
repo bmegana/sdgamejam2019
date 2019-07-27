@@ -18,7 +18,8 @@ public class PlayerMovement : MonoBehaviour
         float vertical = Input.GetAxis("Vertical");
 
         Vector3 dir = new Vector3(
-            horizontal * maxSpeed, 0, vertical * maxSpeed);
+            horizontal * maxSpeed, rb.velocity.y, vertical * maxSpeed
+        );
         
         rb.velocity = dir;
     }

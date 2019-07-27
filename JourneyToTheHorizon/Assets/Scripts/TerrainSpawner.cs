@@ -1,6 +1,10 @@
-﻿using System.Collections;
+﻿#define LIMIT_TERRAIN_SPAWNING
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+
 
 public class TerrainSpawner : MonoBehaviour
 {
@@ -13,12 +17,15 @@ public class TerrainSpawner : MonoBehaviour
     [SerializeField] private float despawnDist = 200.0f;
     [SerializeField] private bool enableSpawn = true;
     [SerializeField] private Vector3 debugPlayerDist = new Vector3();
+    [SerializeField] private float borderWidth = 0.5f;
 
     // Going clockwise (looking towards -Y) starting at +X
-    private TerrainSpawner[] terrainNeighbors = { null, null, null, null, null, null, null, null };
+    [SerializeField] private TerrainSpawner[] terrainNeighbors = { null, null, null, null, null, null, null, null };
+    [SerializeField] private NavMeshLink[] neighborLink = { null, null, null, null };
 
-    // Start is called before the first frame update
-    void Start()
+
+	// Start is called before the first frame update
+	void Start()
     {
         
     }
@@ -47,64 +54,83 @@ public class TerrainSpawner : MonoBehaviour
 
                 if ( vPlayerDistance.x > spawnExtents.x )
                 {
-                    if ( terrainNeighbors[7] == null )
+#if !LIMIT_TERRAIN_SPAWNING
+					if ( terrainNeighbors[7] == null )
                     {
                         SpawnNeighbor( 7, new Vector3( posX, sameY, posZ ) );
                     }
+#endif
                     if ( terrainNeighbors[0] == null )
                     {
                         SpawnNeighbor( 0, new Vector3( posX, sameY, sameZ ) );
-                    }
+					}
+#if !LIMIT_TERRAIN_SPAWNING
                     if ( terrainNeighbors[1] == null )
                     {
                         SpawnNeighbor( 1, new Vector3( posX, sameY, negZ ) );
                     }
+#endif
                 }
                 else if ( vPlayerDistance.x < -spawnExtents.x )
                 {
+
+#if !LIMIT_TERRAIN_SPAWNING
                     if ( terrainNeighbors[3] == null )
                     {
                         SpawnNeighbor( 3, new Vector3( negX, sameY, negZ ) );
                     }
+#endif
                     if ( terrainNeighbors[4] == null )
                     {
                         SpawnNeighbor( 4, new Vector3( negX, sameY, sameZ ) );
                     }
+
+#if !LIMIT_TERRAIN_SPAWNING
                     if ( terrainNeighbors[5] == null )
                     {
                         SpawnNeighbor( 5, new Vector3( negX, sameY, posZ ) );
                     }
+#endif
                 }
 
                 if ( vPlayerDistance.z > spawnExtents.z )
                 {
+
+#if !LIMIT_TERRAIN_SPAWNING
                     if ( terrainNeighbors[5] == null )
                     {
                         SpawnNeighbor( 5, new Vector3( negX, sameY, posZ ) );
                     }
+#endif
                     if ( terrainNeighbors[6] == null )
                     {
                         SpawnNeighbor( 6, new Vector3( sameX, sameY, posZ ) );
                     }
+#if !LIMIT_TERRAIN_SPAWNING
                     if ( terrainNeighbors[7] == null )
                     {
                         SpawnNeighbor( 7, new Vector3( posX, sameY, posZ ) );
                     }
+#endif
                 }
                 else if ( vPlayerDistance.z < -spawnExtents.z )
                 {
+#if !LIMIT_TERRAIN_SPAWNING
                     if ( terrainNeighbors[1] == null )
                     {
                         SpawnNeighbor( 1, new Vector3( posX, sameY, negZ ) );
                     }
+#endif
                     if ( terrainNeighbors[2] == null )
                     {
                         SpawnNeighbor( 2, new Vector3( sameX, sameY, negZ ) );
                     }
+#if !LIMIT_TERRAIN_SPAWNING
                     if ( terrainNeighbors[3] == null )
                     {
                         SpawnNeighbor( 3, new Vector3( negX, sameY, negZ ) );
                     }
+#endif
                 }
             }
         }
@@ -116,8 +142,20 @@ public class TerrainSpawner : MonoBehaviour
         {
             if ( terrainNeighbors[idx] != null )
             {
-                terrainNeighbors[idx].terrainNeighbors[( idx + 4 ) % 8] = null;
+                int idxInNeighbor = ( idx + 4 ) % 8;
+                terrainNeighbors[idx].terrainNeighbors[idxInNeighbor] = null;
+				if ( idx % 2 == 0 && terrainNeighbors[idx].neighborLink[idxInNeighbor / 2] != null )
+				{
+					Destroy( terrainNeighbors[idx].neighborLink[idxInNeighbor / 2] );
+					terrainNeighbors[idx].neighborLink[idxInNeighbor / 2] = null;
+				}
+
                 terrainNeighbors[idx] = null;
+				if ( idx % 2 == 0 && neighborLink[idx / 2] != null )
+				{
+					Destroy( neighborLink[idx / 2] );
+					neighborLink[idx / 2] = null;
+				}
             }
         }
     }
@@ -125,12 +163,180 @@ public class TerrainSpawner : MonoBehaviour
     private void SpawnNeighbor( int idx, Vector3 pos )
     {
         GameObject neighbor = Instantiate( terrainPrefabs[0], pos, Quaternion.identity );
-        terrainNeighbors[idx] = neighbor.GetComponent<TerrainSpawner>();
-        if ( terrainNeighbors[idx] == null )
+		TerrainSpawner neighborSpawner = neighbor.GetComponent<TerrainSpawner>();
+        if ( neighborSpawner == null )
         {
-            terrainNeighbors[idx] = neighbor.AddComponent<TerrainSpawner>();
+			neighborSpawner = neighbor.AddComponent<TerrainSpawner>();
         }
-        terrainNeighbors[idx].terrainNeighbors[( idx + 4 ) % 8] = this;
-        terrainNeighbors[idx].playerCharacter = playerCharacter;
+		neighborSpawner.terrainNeighbors = new TerrainSpawner[8];
+        for ( int neighborIdx = 0; neighborIdx < 8; neighborIdx++ )
+        {
+			neighborSpawner.terrainNeighbors[neighborIdx] = null;
+        }
+		CreateLink( idx, neighborSpawner );
+		neighborSpawner.PopulateNeighbors();
+		neighborSpawner.playerCharacter = playerCharacter;
+    }
+
+    private void PopulateNeighbors()
+    {
+        List<int> neighborsToCheck = new List<int>( 8 );
+        for ( int idx = 0; idx < 8; idx++ )
+        {
+            if ( terrainNeighbors[idx] != null )
+            {
+                neighborsToCheck.Add( idx );
+            }
+        }
+
+        for ( int idx = 0; idx < neighborsToCheck.Count; idx++ )
+        {
+            int neighborIdx = neighborsToCheck[idx];
+            int myIdxInNeighbor = ( neighborIdx + 4 ) % 8;
+            bool diagonalAdjacent = ( neighborIdx % 2 == 1 );
+            if ( terrainNeighbors[neighborIdx].terrainNeighbors[( myIdxInNeighbor + 6 ) % 8] != null && !diagonalAdjacent )
+            {
+                int nextIdx = ( neighborIdx + 1 ) % 8;
+                int nextIdxInNeighbor = ( myIdxInNeighbor + 6 ) % 8;
+                if ( terrainNeighbors[nextIdx] != null && terrainNeighbors[nextIdx] != terrainNeighbors[neighborIdx].terrainNeighbors[nextIdxInNeighbor] )
+                {
+                    Debug.LogError( "Neighbor Mismatch!" );
+                }
+                CreateLink( nextIdx, terrainNeighbors[neighborIdx].terrainNeighbors[nextIdxInNeighbor] );
+
+                if ( !neighborsToCheck.Contains( nextIdx ) )
+                {
+                    neighborsToCheck.Add( nextIdx );
+                }
+            }
+            if ( terrainNeighbors[neighborIdx].terrainNeighbors[( myIdxInNeighbor + 7 ) % 8] != null )
+            {
+                int nextIdx = diagonalAdjacent ? ( neighborIdx + 1 ) % 8 : ( neighborIdx + 2 ) % 8;
+                int nextIdxInNeighbor = ( myIdxInNeighbor + 7 ) % 8;
+                if ( terrainNeighbors[nextIdx] != null && terrainNeighbors[nextIdx] != terrainNeighbors[neighborIdx].terrainNeighbors[nextIdxInNeighbor] )
+                {
+                    Debug.LogError( "Neighbor Mismatch!" );
+                }
+                CreateLink( nextIdx, terrainNeighbors[neighborIdx].terrainNeighbors[nextIdxInNeighbor] );
+
+                if ( !neighborsToCheck.Contains( nextIdx ) )
+                {
+                    neighborsToCheck.Add( nextIdx );
+                }
+            }
+            if ( terrainNeighbors[neighborIdx].terrainNeighbors[( myIdxInNeighbor + 1 ) % 8] != null )
+            {
+                int nextIdx = diagonalAdjacent ? ( neighborIdx + 7 ) % 8 : ( neighborIdx + 6 ) % 8;
+                int nextIdxInNeighbor = ( myIdxInNeighbor + 1 ) % 8;
+                if ( terrainNeighbors[nextIdx] != null && terrainNeighbors[nextIdx] != terrainNeighbors[neighborIdx].terrainNeighbors[nextIdxInNeighbor] )
+                {
+                    Debug.LogError( "Neighbor Mismatch!" );
+                }
+                CreateLink( nextIdx, terrainNeighbors[neighborIdx].terrainNeighbors[nextIdxInNeighbor] );
+
+                if ( !neighborsToCheck.Contains( nextIdx ) )
+                {
+                    neighborsToCheck.Add( nextIdx );
+                }
+            }
+            if ( terrainNeighbors[neighborIdx].terrainNeighbors[( myIdxInNeighbor + 2 ) % 8] != null && !diagonalAdjacent )
+            {
+                int nextIdx = ( neighborIdx + 7 ) % 8;
+                int nextIdxInNeighbor = ( myIdxInNeighbor + 2 ) % 8;
+                if ( terrainNeighbors[nextIdx] != null && terrainNeighbors[nextIdx] != terrainNeighbors[neighborIdx].terrainNeighbors[nextIdxInNeighbor] )
+                {
+                    Debug.LogError( "Neighbor Mismatch!" );
+                }
+                CreateLink( nextIdx, terrainNeighbors[neighborIdx].terrainNeighbors[nextIdxInNeighbor] );
+
+                if ( !neighborsToCheck.Contains( nextIdx ) )
+                {
+                    neighborsToCheck.Add( nextIdx );
+                }
+            }
+        }
+    }
+
+    private void CreateLink( int idx, TerrainSpawner neighbor )
+    {
+        int idxInNeighbor = ( idx + 4 ) % 8;
+        terrainNeighbors[idx] = neighbor;
+        terrainNeighbors[idx].terrainNeighbors[idxInNeighbor] = this;
+
+        if ( idx % 2 == 0 )
+        {
+            int linkIdx = idx / 2;
+            Vector3 start = centerAdjust;
+            Vector3 end = centerAdjust;
+			Vector3 neighborStart = centerAdjust;
+            Vector3 neighborEnd = centerAdjust;
+            float width = 0;
+            switch ( linkIdx )
+            {
+                case 0:
+                {
+                    start.x += spawnLimits.x - borderWidth;
+                    end.x += spawnLimits.x + borderWidth;
+					neighborStart.x -= spawnLimits.x - borderWidth;
+					neighborEnd.x -= spawnLimits.x + borderWidth;
+					width = spawnOffset.z - borderWidth * 2;
+                    break;
+                }
+                case 1:
+                {
+                    start.z -= spawnLimits.z - borderWidth;
+                    end.z -= spawnLimits.z + borderWidth;
+					neighborStart.z += spawnLimits.z - borderWidth;
+					neighborEnd.z += spawnLimits.z + borderWidth;
+					width = spawnOffset.x - borderWidth * 2;
+                    break;
+                }
+                case 2:
+                {
+                    start.x -= spawnLimits.x - borderWidth;
+                    end.x -= spawnLimits.x + borderWidth;
+					neighborStart.x += spawnLimits.x - borderWidth;
+					neighborEnd.x += spawnLimits.x + borderWidth;
+					width = spawnOffset.z - borderWidth * 2;
+                    break;
+                }
+                case 3:
+                {
+                    start.z += spawnLimits.z - borderWidth;
+                    end.z += spawnLimits.z + borderWidth;
+					neighborStart.z -= spawnLimits.z - borderWidth;
+					neighborEnd.z -= spawnLimits.z + borderWidth;
+					width = spawnOffset.x - borderWidth * 2;
+                    break;
+                }
+                default:
+                {
+                    return;
+                }
+            }
+
+			if ( neighborLink[linkIdx] != null )
+			{
+				Destroy( neighborLink[linkIdx] );
+				neighborLink[linkIdx] = null;
+			}
+            neighborLink[linkIdx] = gameObject.AddComponent<NavMeshLink>();
+            neighborLink[linkIdx].bidirectional = false;
+            neighborLink[linkIdx].startPoint = start;
+            neighborLink[linkIdx].endPoint = end;
+            neighborLink[linkIdx].width = width;
+			
+			if ( terrainNeighbors[idx].neighborLink[idxInNeighbor / 2] != null )
+			{
+				Destroy( terrainNeighbors[idx].neighborLink[idxInNeighbor / 2] );
+				terrainNeighbors[idx].neighborLink[idxInNeighbor / 2] = null;
+			}
+			terrainNeighbors[idx].neighborLink[idxInNeighbor / 2] = terrainNeighbors[idx].gameObject.AddComponent<NavMeshLink>();
+            terrainNeighbors[idx].neighborLink[idxInNeighbor / 2].bidirectional = false;
+            terrainNeighbors[idx].neighborLink[idxInNeighbor / 2].startPoint = neighborStart;
+            terrainNeighbors[idx].neighborLink[idxInNeighbor / 2].endPoint = neighborEnd;
+            terrainNeighbors[idx].neighborLink[idxInNeighbor / 2].width = width;
+        }
     }
 }
+

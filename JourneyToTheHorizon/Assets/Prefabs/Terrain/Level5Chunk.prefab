@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 87641655340910623}
   - component: {fileID: 87641655340910622}
   - component: {fileID: 87641655340910617}
+  - component: {fileID: 6611570232958960262}
   m_Layer: 0
   m_Name: Level5Chunk
   m_TagString: Untagged
@@ -87,6 +88,45 @@ TerrainCollider:
   m_Enabled: 1
   m_TerrainData: {fileID: 15600000, guid: c171ecc069ad25a4a9d94e68c32a89c8, type: 2}
   m_EnableTreeColliders: 1
+--- !u!114 &6611570232958960262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87641655340910616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e142fef9558c633489faa573e67f7b28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terrainPrefabs:
+  - {fileID: 7454379765258777509, guid: 5bb944de7008dc84ca8ab50461ddc20e, type: 3}
+  - {fileID: 9019424354582796463, guid: 7f437149d7e677a45be73b2129d4e7bc, type: 3}
+  - {fileID: 7306404568373453089, guid: 2b42b2efa9199074ea425165b8f536e1, type: 3}
+  - {fileID: 3305472292431516549, guid: 02cbd0744394214418353d02edcbc6d8, type: 3}
+  - {fileID: 87641655340910616}
+  destinationPrefab: {fileID: 5816194142014208732, guid: 976217bc8f530324b8b9dca6cebde121,
+    type: 3}
+  centerAdjust: {x: 50, y: 30.28837, z: 50}
+  spawnExtents: {x: 20, y: 0, z: 20}
+  spawnLimits: {x: 50, y: 0, z: 50}
+  spawnOffset: {x: 100, y: 0, z: 100}
+  despawnDist: 200
+  enableSpawn: 1
+  debugPlayerDist: {x: 0, y: 0, z: 0}
+  borderWidth: 1
+  spawnCountdown: 50
+  earlySpawnChance: 0.025
+  terrainNeighbors:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &87641656158623181
 GameObject:
   m_ObjectHideFlags: 0
@@ -2212,15 +2252,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5909fe0d1629b8d4f814334017c51469, type: 3}
---- !u!4 &4921846504313701641 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 5909fe0d1629b8d4f814334017c51469,
-    type: 3}
-  m_PrefabInstance: {fileID: 87641655523700243}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6870983507902068934 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6804374471006590677, guid: 5909fe0d1629b8d4f814334017c51469,
+    type: 3}
+  m_PrefabInstance: {fileID: 87641655523700243}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4921846504313701641 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 5909fe0d1629b8d4f814334017c51469,
     type: 3}
   m_PrefabInstance: {fileID: 87641655523700243}
   m_PrefabAsset: {fileID: 0}

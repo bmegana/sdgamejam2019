@@ -11,13 +11,20 @@ public class PlayerMovement : MonoBehaviour
 	public Transform cameraTransform;
 	private Quaternion originalCameraRotation;
 
+	private bool isFireHeld = false;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
 		originalCameraRotation = cameraTransform.rotation;
     }
 
-    private void Update()
+	private void Start()
+	{
+		isFireHeld = Input.GetAxis( "Fire1" ) > 0;
+	}
+
+	private void Update()
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
@@ -42,5 +49,23 @@ public class PlayerMovement : MonoBehaviour
 		{
 			rb.velocity = Vector3.zero;
 		}
+
+		if ( Input.GetAxis( "Fire1" ) > 0 )
+		{
+			if ( !isFireHeld )
+			{
+				Destroy( gameObject );
+			}
+			isFireHeld = true;
+		}
+		else
+		{
+			isFireHeld = false;
+		}
     }
+
+	public void ResetCamera()
+	{
+		cameraTransform.rotation = originalCameraRotation;
+	}
 }

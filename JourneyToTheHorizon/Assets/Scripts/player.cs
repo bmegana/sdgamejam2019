@@ -40,6 +40,7 @@ public class player : MonoBehaviour {
             }
 
     }
+
 #if false
 	void Torch()
     {
@@ -62,6 +63,7 @@ public class player : MonoBehaviour {
             }
         }
     }
+
     void Water()
     {
         if (OnCollisionEnter.gameObject.tag == "Water")

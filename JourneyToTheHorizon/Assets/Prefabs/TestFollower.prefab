@@ -90,6 +90,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd00a0f32cf04b945ab6aa17e9e2a0e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followerIdx: 2
+  followerIdx: 0
   leader: {fileID: 0}
+  speed: 30
+  maxOffset: 2
   rightOffset: 0

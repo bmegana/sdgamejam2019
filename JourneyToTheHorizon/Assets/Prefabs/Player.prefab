@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2025959550083197406}
   - component: {fileID: 2025959550083197405}
   - component: {fileID: 2025959550083197344}
+  - component: {fileID: 5464920656414542364}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -108,7 +109,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
@@ -119,7 +120,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2025959550083197349}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fedd21e7223fd32488094b440e14ff30, type: 3}
   m_Name: 
@@ -128,6 +129,7 @@ MonoBehaviour:
   followerPadding: 2
   waypointDist: 1
   debugWaypointPrefab: {fileID: 0}
+  overrideLeader: 0
 --- !u!114 &2025959550083197405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,6 +157,21 @@ MonoBehaviour:
   maxSpeed: 20
   angularSpeed: 360
   cameraTransform: {fileID: 2025959550162469227}
+--- !u!114 &5464920656414542364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2025959550083197349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd00a0f32cf04b945ab6aa17e9e2a0e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 30
+  maxOffset: 2
+  rightOffset: 0
 --- !u!1 &2025959550162469230
 GameObject:
   m_ObjectHideFlags: 0

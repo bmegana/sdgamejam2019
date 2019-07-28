@@ -1,4 +1,5 @@
 ﻿//#define LIMIT_TERRAIN_SPAWNING
+//#define USING_NAVMESH
 
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +10,6 @@ using UnityEngine.AI;
 public class TerrainSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject[] terrainPrefabs;
-    [SerializeField] private GameObject playerCharacter;
     [SerializeField] private Vector3 centerAdjust = new Vector3( 50.0f, 0.0f, 50.0f );
     [SerializeField] private Vector3 spawnExtents = new Vector3( 40.0f, 0.0f, 40.0f );
     [SerializeField] private Vector3 spawnLimits = new Vector3( 50.0f, 0.0f, 50.0f );
@@ -21,7 +21,9 @@ public class TerrainSpawner : MonoBehaviour
 
     // Going clockwise (looking towards -Y) starting at +X
     [SerializeField] private TerrainSpawner[] terrainNeighbors = { null, null, null, null, null, null, null, null };
-    [SerializeField] private NavMeshLink[] neighborLink = { null, null, null, null };
+#if USING_NAVMESH
+	[SerializeField] private NavMeshLink[] neighborLink = { null, null, null, null };
+#endif
 
 
 	// Start is called before the first frame update
@@ -33,9 +35,10 @@ public class TerrainSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ( playerCharacter != null )
+		LineLeader leader = LineLeader.GetActiveLeader();
+        if ( leader != null )
         {
-            Vector3 vPlayerDistance = playerCharacter.transform.position - transform.position - centerAdjust;
+            Vector3 vPlayerDistance = leader.transform.position - transform.position - centerAdjust;
             debugPlayerDist = vPlayerDistance;
             if ( vPlayerDistance.magnitude > despawnDist )
             {
@@ -144,19 +147,23 @@ public class TerrainSpawner : MonoBehaviour
             {
                 int idxInNeighbor = ( idx + 4 ) % 8;
                 terrainNeighbors[idx].terrainNeighbors[idxInNeighbor] = null;
+#if USING_NAVMESH
 				if ( idx % 2 == 0 && terrainNeighbors[idx].neighborLink[idxInNeighbor / 2] != null )
 				{
 					Destroy( terrainNeighbors[idx].neighborLink[idxInNeighbor / 2] );
 					terrainNeighbors[idx].neighborLink[idxInNeighbor / 2] = null;
 				}
+#endif
 
-                terrainNeighbors[idx] = null;
+				terrainNeighbors[idx] = null;
+#if USING_NAVMESH
 				if ( idx % 2 == 0 && neighborLink[idx / 2] != null )
 				{
 					Destroy( neighborLink[idx / 2] );
 					neighborLink[idx / 2] = null;
 				}
-            }
+#endif
+			}
         }
     }
 
@@ -175,7 +182,6 @@ public class TerrainSpawner : MonoBehaviour
         }
 		CreateLink( idx, neighborSpawner );
 		neighborSpawner.PopulateNeighbors();
-		neighborSpawner.playerCharacter = playerCharacter;
     }
 
     private void PopulateNeighbors()
@@ -263,7 +269,8 @@ public class TerrainSpawner : MonoBehaviour
         terrainNeighbors[idx] = neighbor;
         terrainNeighbors[idx].terrainNeighbors[idxInNeighbor] = this;
 
-        if ( idx % 2 == 0 )
+#if USING_NAVMESH
+		if ( idx % 2 == 0 )
         {
             int linkIdx = idx / 2;
             Vector3 start = centerAdjust;
@@ -337,6 +344,7 @@ public class TerrainSpawner : MonoBehaviour
             terrainNeighbors[idx].neighborLink[idxInNeighbor / 2].endPoint = neighborEnd;
             terrainNeighbors[idx].neighborLink[idxInNeighbor / 2].width = width;
         }
-    }
+#endif
+	}
 }
 

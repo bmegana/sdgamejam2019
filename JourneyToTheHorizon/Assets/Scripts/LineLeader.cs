@@ -1,23 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LineLeader : MonoBehaviour
 {
     [SerializeField] private float targetPathLength = 20.0f;
     [SerializeField] private float followerPadding = 0.5f;
     [SerializeField] private float waypointDist = 0.25f;
-    [SerializeField] private GameObject debugWaypointPrefab; 
+    [SerializeField] private GameObject debugWaypointPrefab;
+    [SerializeField] private bool overrideLeader;
 
     private List<Vector3> leaderPath = new List<Vector3>();
     private List<GameObject> debugWaypointMarkers = new List<GameObject>();
     private float totalLength;
     private float lastSegmentLength;
 
+	private static List<LineLeader> leaderRoster = new List<LineLeader>();
+
     // Start is called before the first frame update
     void Start()
     {
         ResetPath();
+
+		if ( overrideLeader )
+		{
+			leaderRoster.Insert( 0, this );
+		}
+		else
+		{
+			leaderRoster.Add( this );
+		}
     }
 
     // Update is called once per frame
@@ -56,7 +69,38 @@ public class LineLeader : MonoBehaviour
         }
     }
 
-    public void ResetPath()
+	private void OnDestroy()
+	{
+		if ( leaderRoster[0] == this )
+		{
+			if ( leaderRoster.Count > 1 )
+			{
+				// Transfer control to next in line
+				LineLeader successor = leaderRoster[1];
+				PlayerMovement moveComp = successor.gameObject.GetComponent<PlayerMovement>();
+				if ( moveComp != null )
+				{
+					moveComp.enabled = true;
+					moveComp.cameraTransform.gameObject.SetActive( true );
+					moveComp.ResetCamera();
+				}
+				Rigidbody rigidbodyComp = successor.gameObject.GetComponent<Rigidbody>();
+				if ( rigidbodyComp != null )
+				{
+					rigidbodyComp.isKinematic = false;
+				}
+			}
+			else
+			{
+				// GAME OVER
+				//SceneManager.LoadSceneAsync( "MainMenu" );
+			}
+		}
+
+		leaderRoster.Remove( this );
+	}
+
+	private void ResetPath()
     {
         leaderPath.Clear();
         totalLength = 0;
@@ -74,48 +118,66 @@ public class LineLeader : MonoBehaviour
         PushCurrentLocation();
     }
 
-    public Vector3 GetFollowerLocation( int followerIdx, float rightOffset )
-    {
-        if ( leaderPath.Count == 0 )
-        {
-            return transform.position + transform.right * rightOffset;
-        }
+	public static LineLeader GetActiveLeader()
+	{
+		if ( leaderRoster.Count > 0 )
+		{
+			return leaderRoster[0];
+		}
+		else
+		{
+			return null;
+		}
+	}
 
-        float targetDist = ( followerIdx + 1 ) * followerPadding;
-        float totalDistAtCurrWaypoint = Vector3.Distance( transform.position, leaderPath[0] );
-        if ( totalDistAtCurrWaypoint >= targetDist )
-        {
-			Vector3 result = Vector3.Lerp( transform.position, leaderPath[0], targetDist / totalDistAtCurrWaypoint );
-			Vector3 diff = transform.position - leaderPath[0];
+	public static Vector3 GetFollowerLocation( int followerIdx, float rightOffset )
+	{
+		LineLeader leader = GetActiveLeader();
+		if ( leader == null )
+		{
+			return Vector3.zero;
+		}
+
+		if ( leader.leaderPath.Count == 0 )
+		{
+			return leader.transform.position + leader.transform.right * rightOffset;
+		}
+
+		float targetDist = ( followerIdx + 1 ) * leader.followerPadding;
+		float totalDistAtCurrWaypoint = Vector3.Distance( leader.transform.position, leader.leaderPath[0] );
+		if ( totalDistAtCurrWaypoint >= targetDist )
+		{
+			Vector3 result = Vector3.Lerp( leader.transform.position, leader.leaderPath[0], targetDist / totalDistAtCurrWaypoint );
+			Vector3 diff = leader.transform.position - leader.leaderPath[0];
 			result += Vector3.Cross( Vector3.up, diff.normalized ) * rightOffset;
 			return result;
-        }
+		}
 
-        for ( int currWayPoint = 0; currWayPoint < leaderPath.Count - 1; currWayPoint++ )
-        {
-            float currSegmentLength = Vector3.Distance( leaderPath[currWayPoint], leaderPath[currWayPoint + 1] );
-            if ( totalDistAtCurrWaypoint + currSegmentLength > targetDist )
-            {
-				Vector3 result = Vector3.Lerp( leaderPath[currWayPoint], leaderPath[currWayPoint + 1], ( targetDist - totalDistAtCurrWaypoint ) / currSegmentLength );
-				Vector3 diff = leaderPath[currWayPoint] - leaderPath[currWayPoint + 1];
+		for ( int currWayPoint = 0; currWayPoint < leader.leaderPath.Count - 1; currWayPoint++ )
+		{
+			float currSegmentLength = Vector3.Distance( leader.leaderPath[currWayPoint], leader.leaderPath[currWayPoint + 1] );
+			if ( totalDistAtCurrWaypoint + currSegmentLength > targetDist )
+			{
+				Vector3 result = Vector3.Lerp( leader.leaderPath[currWayPoint], leader.leaderPath[currWayPoint + 1], ( targetDist - totalDistAtCurrWaypoint ) / currSegmentLength );
+				Vector3 diff = leader.leaderPath[currWayPoint] - leader.leaderPath[currWayPoint + 1];
 				result += Vector3.Cross( Vector3.up, diff.normalized ) * rightOffset;
 				return result;
 			}
-            totalDistAtCurrWaypoint += currSegmentLength;
-        }
+			totalDistAtCurrWaypoint += currSegmentLength;
+		}
 
 		Vector3 finalResult;
-		finalResult = leaderPath[leaderPath.Count - 1];
-		if ( leaderPath.Count > 1 )
+		finalResult = leader.leaderPath[leader.leaderPath.Count - 1];
+		if ( leader.leaderPath.Count > 1 )
 		{
-			Vector3 diff = leaderPath[leaderPath.Count - 2] - leaderPath[leaderPath.Count - 1];
+			Vector3 diff = leader.leaderPath[leader.leaderPath.Count - 2] - leader.leaderPath[leader.leaderPath.Count - 1];
 			finalResult += Vector3.Cross( Vector3.up, diff.normalized ) * rightOffset;
 		}
 		else
 		{
-			Vector3 diff = transform.position - leaderPath[0];
+			Vector3 diff = leader.transform.position - leader.leaderPath[0];
 			finalResult += Vector3.Cross( Vector3.up, diff.normalized ) * rightOffset;
 		}
-        return leaderPath[leaderPath.Count - 1];
-    }
+		return leader.leaderPath[leader.leaderPath.Count - 1];
+	}
 }

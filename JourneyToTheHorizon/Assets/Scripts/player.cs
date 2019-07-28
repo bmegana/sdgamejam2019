@@ -25,7 +25,43 @@ public class player : MonoBehaviour {
             }
             hunger = 30;
         }
-        
+        if (Collision.gameObject.tag == "Fire")
+        {
+            Console.WriteLine("Press 'E' To Light");
+            if (Input.GetAxis("Submit")>0)
+            {
+                RemoveItem.Inventory(Stick);
+                AddItem.Inventory(Torch);
+            }
+        if (Collision.gameObject.tag == "tree")
+            {
+                Console.WriteLine("Press 'F' to Burn");
+                if (Input.GetAxis("axis")> 0)
+                {
+                    Destroy(gameObject(Tree));
+                    Create(gameObject(Fire));
+                }
+            }
+        }
+        if (Collision.gameObject.tag == "Water")
+        {
+            Console.WriteLine("Press 'E' to collect");
+            if (Input.GetAxis("Submit")>0)
+            {
+                RemoveItem.Inventory(Bucket);
+                AddItem.Inventory(Water);
+            }
+        }
+        if (Collision.gameObject.tag == "Fire")
+        {
+            Console.WriteLine("Press 'Q' to Douse");
+            if (Input.GetAxis("axis")>0)
+            {
+                RemoveItem.Inventory(Water);
+                AddItem.Inventory(Bucket);
+                Destroy(gameObject(Fire));
+            }
+        }
     }
 
     void Hunger()
@@ -40,50 +76,19 @@ public class player : MonoBehaviour {
             }
 
     }
-    void Torch()
+    
+   
+    /*void Rock()
     {
-        if (OnCollisionEnter.gameObject.tag == "Fire")
+        if (OnCollisionEnter.gameObject.tag == "Rock")
         {
-            Console.WriteLine("Press 'E' To Light");
-            if (Input.GetAxis("Submit")>0)
+            Console.WriteLine("Press 'E' to Collect");
+            if (input.GetAxis("Submit")>0)
             {
-                RemoveItem.Inventory(Stick);
-                AddItem.Inventory(Torch);
-            }
-        if (OnCollisionEnter.gameObject.tag == "tree")
-            {
-                Console.WriteLine("Press 'F' to Burn");
-                if (Input.GetAxis("axis")> 0)
-                {
-                    Destroy(gameObject(Tree));
-                    Create(gameObject(Fire));
-                }
+                AddItem.Inventory(Rock);
             }
         }
-    }
-    void Water()
-    {
-        if (OnCollisionEnter.gameObject.tag == "Water")
-        {
-            Console.WriteLine("Press 'E' to collect");
-            if (Input.GetAxis("Submit")>0)
-            {
-                RemoveItem.Inventory(Bucket);
-                AddItem.Inventory(Water);
-            }
-        }
-        if (OnCollisionEnter.gameObject.tag == "Fire")
-        {
-            Console.WriteLine("Press 'Q' to Douse");
-            if (Input.GetAxis("axis")>0)
-            {
-                RemoveItem.Inventory(Water);
-                AddItem.Inventory(Bucket);
-                Destroy(gameObject(Fire));
-            }
-        }
-    }
-
+    }*/
    
 
 

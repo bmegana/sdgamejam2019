@@ -248,7 +248,7 @@ MonoBehaviour:
   escMenu: {fileID: 104998397}
   credits: {fileID: 0}
   mainMenu: {fileID: 0}
-  victoryPopup: {fileID: 0}
+  victoryPopup: {fileID: 2720142269782438693}
 --- !u!1001 &512442015
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1237,6 +1237,12 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 2025959550083197348, guid: 8b23f177a3369c746838192d78b413e8, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8b23f177a3369c746838192d78b413e8, type: 3}
+--- !u!1 &2720142269782438693 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 904438735744971126, guid: 749d6679f79adea469abb1fdfef196ec,
+    type: 3}
+  m_PrefabInstance: {fileID: 2968669057664320083}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2720142269782438694 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 904438735744971125, guid: 749d6679f79adea469abb1fdfef196ec,
@@ -1370,6 +1376,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 453192157}
+    - target: {fileID: 904438735007611222, guid: 749d6679f79adea469abb1fdfef196ec,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ReturnToMainMenu
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 749d6679f79adea469abb1fdfef196ec, type: 3}
 --- !u!1001 &3244692620583992705

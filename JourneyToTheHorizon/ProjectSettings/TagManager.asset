@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Water
+  - Recruit
   layers:
   - Default
   - TransparentFX

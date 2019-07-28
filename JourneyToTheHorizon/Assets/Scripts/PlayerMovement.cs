@@ -5,6 +5,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public float maxSpeed;
 	public float angularSpeed;
+	public GameObject playerPrefab;
 
     private Rigidbody rb;
 
@@ -69,5 +70,14 @@ public class PlayerMovement : MonoBehaviour
 	public void ResetCamera()
 	{
 		cameraTransform.rotation = originalCameraRotation;
+	}
+
+	private void OnCollisionEnter( Collision collision )
+	{
+		if ( collision.gameObject.tag == "Recruit" )
+		{
+			Instantiate( playerPrefab, collision.transform.position, collision.transform.rotation );
+			Destroy( collision.gameObject );
+		}
 	}
 }

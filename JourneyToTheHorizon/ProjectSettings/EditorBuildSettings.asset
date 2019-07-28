@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Dana's Test Scene.unity
     guid: 5ad126fbe1baad941adbe95a88b1b32b
+  - enabled: 1
+    path: Assets/Scenes/Ending Scene.unity
+    guid: 0434daa70deda6c4cacb2d4905b75588
   m_configObjects: {}

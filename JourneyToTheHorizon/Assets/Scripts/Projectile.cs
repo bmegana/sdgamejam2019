@@ -19,4 +19,13 @@ public class Projectile : MonoBehaviour
     {
         StartCoroutine(ShortenProjectileLife());
     }
+
+    private void OnCollisionEnter(Collision col)
+    {
+        GameObject entity = col.gameObject;
+        if (entity.CompareTag("Player") || entity.CompareTag("Tree"))
+        {
+            Destroy(gameObject);
+        }
+    }
 }

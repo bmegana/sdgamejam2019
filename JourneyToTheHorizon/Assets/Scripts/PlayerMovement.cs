@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
 		{
 			if ( !isFireHeld )
 			{
-				Destroy( gameObject );
+				//Destroy( gameObject );
 			}
 			isFireHeld = true;
 		}
@@ -77,6 +77,12 @@ public class PlayerMovement : MonoBehaviour
 		if ( collision.gameObject.tag == "Recruit" )
 		{
 			GameObject clone = Instantiate( playerPrefab, collision.transform.position, Quaternion.identity );
+			PlayerMovement moveComp = clone.GetComponent<PlayerMovement>();
+			if ( moveComp != null )
+			{
+				moveComp.originalCameraRotation = originalCameraRotation;
+				moveComp.ResetCamera();
+			}
 			Destroy( collision.gameObject );
 		}
 	}

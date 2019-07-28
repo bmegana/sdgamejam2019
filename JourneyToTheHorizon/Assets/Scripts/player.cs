@@ -84,10 +84,17 @@ public class player : MonoBehaviour {
         }
     }
 
-   
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Recruit")
+        {
+            Instantiate(this, other.transform.position, other.transform.rotation);
+            Destroy(other);
+        }
+    }
 
 
-   
-    
+
+
 }
 

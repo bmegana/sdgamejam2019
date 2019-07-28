@@ -9,13 +9,23 @@ public class MenuManager : MonoBehaviour
 	[SerializeField] private GameObject escMenu;
 	[SerializeField] private GameObject credits;
 	[SerializeField] private GameObject mainMenu;
+	[SerializeField] private GameObject victoryPopup;
 
 	private bool wasEscPressed = false;
+
+	private static MenuManager menuManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+		if ( menuManager != null && menuManager != this )
+		{
+			Destroy( this );
+		}
+		else
+		{
+			menuManager = this;
+		}
     }
 
     // Update is called once per frame
@@ -38,6 +48,11 @@ public class MenuManager : MonoBehaviour
 		}
     }
 
+	public void ReturnToMainMenu()
+	{
+		SceneManager.LoadSceneAsync( "MainMenu" );
+	}
+
 	public void StartGame()
 	{
 		SceneManager.LoadSceneAsync( "Dana's Test Scene" );
@@ -58,6 +73,14 @@ public class MenuManager : MonoBehaviour
 		{
 			mainMenu.SetActive( !enable );
 			credits.SetActive( enable );
+		}
+	}
+
+	public static void DisplayVictoryPopup()
+	{
+		if ( menuManager != null && menuManager.victoryPopup != null )
+		{
+			menuManager.victoryPopup.SetActive( true );
 		}
 	}
 }

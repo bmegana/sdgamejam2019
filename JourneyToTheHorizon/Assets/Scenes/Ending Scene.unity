@@ -583,6 +583,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4205031215958613238, guid: 9be251282264a5d42986f8177813c308,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4205031217045275373, guid: 9be251282264a5d42986f8177813c308,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2758141302131911651, guid: 9be251282264a5d42986f8177813c308,
         type: 3}
       propertyPath: m_ApplyRootMotion
@@ -592,6 +602,56 @@ PrefabInstance:
         type: 3}
       propertyPath: antialiasing
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4205031215958613235, guid: 9be251282264a5d42986f8177813c308,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7895283518679826255, guid: 9be251282264a5d42986f8177813c308,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4205031217045275286, guid: 9be251282264a5d42986f8177813c308,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4205031217045275368, guid: 9be251282264a5d42986f8177813c308,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7895283517576569172, guid: 9be251282264a5d42986f8177813c308,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4205031217119357478, guid: 9be251282264a5d42986f8177813c308,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7331752232215460261, guid: 9be251282264a5d42986f8177813c308,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7331752231163455422, guid: 9be251282264a5d42986f8177813c308,
+        type: 3}
+      propertyPath: BypassReverbZones
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7331752231163455422, guid: 9be251282264a5d42986f8177813c308,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7331752231163455422, guid: 9be251282264a5d42986f8177813c308,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9be251282264a5d42986f8177813c308, type: 3}

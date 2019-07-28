@@ -6,6 +6,7 @@ using UnityEditor;
 
 public class LineLeader : MonoBehaviour
 {
+    public AudioSource playerDeath;
     [SerializeField] private float targetPathLength = 20.0f;
     [SerializeField] private float followerPadding = 0.5f;
     [SerializeField] private float waypointDist = 0.25f;
@@ -22,6 +23,7 @@ public class LineLeader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerDeath = GetComponent<AudioSource>();
         ResetPath();
 
 		if ( overrideLeader )
@@ -83,12 +85,14 @@ public class LineLeader : MonoBehaviour
 
 	private void OnDestroy()
 	{
+        
 		if ( leaderRoster[0] == this )
 		{
 			if ( leaderRoster.Count > 1 )
 			{
 				// Transfer control to next in line
 				LineLeader successor = leaderRoster[1];
+                successor.playerDeath.Play();
 				PlayerMovement moveComp = successor.gameObject.GetComponent<PlayerMovement>();
 				if ( moveComp != null )
 				{

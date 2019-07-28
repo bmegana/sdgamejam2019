@@ -10,11 +10,12 @@ public class AnimationStart : MonoBehaviour
     void Start()
     {
         Anim = gameObject.GetComponent<Animation>();
+        Anim.Play("CamAnimation");
     }
 
     // Update is called once per frame
     void Update()
     {
-        Anim.Play("CamAnimation");
+        
     }
 }

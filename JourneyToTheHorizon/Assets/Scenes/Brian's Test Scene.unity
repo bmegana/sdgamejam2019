@@ -447,41 +447,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 87641657116303656, guid: 0fc69bd9e48958b43a8e68b9758cdc74,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 87641657116303660, guid: 0fc69bd9e48958b43a8e68b9758cdc74,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 87641657116303663, guid: 0fc69bd9e48958b43a8e68b9758cdc74,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 87641657116303663, guid: 0fc69bd9e48958b43a8e68b9758cdc74,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8220952274399868698, guid: 0fc69bd9e48958b43a8e68b9758cdc74,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6870983507902068934, guid: 0fc69bd9e48958b43a8e68b9758cdc74,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2869984369552292222, guid: 0fc69bd9e48958b43a8e68b9758cdc74,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0fc69bd9e48958b43a8e68b9758cdc74, type: 3}
 --- !u!1001 &2025959550583548959
@@ -590,6 +555,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7120304604416145231, guid: 8b23f177a3369c746838192d78b413e8,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.023076167
+      objectReference: {fileID: 0}
+    - target: {fileID: 7120304604416145231, guid: 8b23f177a3369c746838192d78b413e8,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.016618406
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b23f177a3369c746838192d78b413e8, type: 3}

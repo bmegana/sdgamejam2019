@@ -92,7 +92,6 @@ public class Kraken : MonoBehaviour
         Rigidbody waterOrbRb = waterOrb.GetComponent<Rigidbody>();
         Vector3 projectileDir = pos - transform.position;
         waterOrbRb.velocity = projectileDir * projectileSpeed;
-        Debug.Log("Water Orb Launch Direction: " + projectileDir);
     }
 
     private void Update()
@@ -106,16 +105,11 @@ public class Kraken : MonoBehaviour
 
                 if (0 < burningTreePositions.Count)
                 {
-                    Debug.Log(
-                        "Shooting at burning tree at position " +
-                        burningTreePositions[0] + "."
-                    );
                     Shoot(burningTreePositions[0]);
                     burningTreePositions.RemoveAt(0);
                 }
                 else
                 {
-                    Debug.Log("Shooting at player.");
                     Shoot(playerPosition);
                 }
             }

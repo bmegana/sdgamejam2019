@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AnimationStart : MonoBehaviour
 {
@@ -10,8 +11,9 @@ public class AnimationStart : MonoBehaviour
     void Start()
     {
         Anim = gameObject.GetComponent<Animation>();
-        Anim.Play("CamAnimation");
+        Anim.Play("CamAnimation2");
+        
     }
-
+    
     // Update is called once per frame
 }

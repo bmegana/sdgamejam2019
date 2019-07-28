@@ -109,9 +109,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   terrainPrefabs:
   - {fileID: 7454379765258777509}
-  playerCharacter: {fileID: 0}
   centerAdjust: {x: 20, y: 30.28837, z: 20}
-  spawnExtents: {x: 10, y: 0, z: 10}
+  spawnExtents: {x: 1, y: 0, z: 1}
   spawnLimits: {x: 20, y: 0, z: 20}
   spawnOffset: {x: 40, y: 0, z: 40}
   despawnDist: 200
@@ -123,11 +122,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  neighborLink:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

@@ -40,7 +40,8 @@ public class player : MonoBehaviour {
             }
 
     }
-    void Torch()
+#if false
+	void Torch()
     {
         if (OnCollisionEnter.gameObject.tag == "Fire")
         {
@@ -83,7 +84,7 @@ public class player : MonoBehaviour {
             }
         }
     }
-
+#endif
    
 
 

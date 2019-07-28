@@ -317,6 +317,7 @@ MonoBehaviour:
   - {fileID: 7454379765258777509}
   - {fileID: 9019424354582796463, guid: 7f437149d7e677a45be73b2129d4e7bc, type: 3}
   - {fileID: 7306404568373453089, guid: 2b42b2efa9199074ea425165b8f536e1, type: 3}
+  - {fileID: 3305472292431516549, guid: 02cbd0744394214418353d02edcbc6d8, type: 3}
   destinationPrefab: {fileID: 5816194142014208732, guid: 976217bc8f530324b8b9dca6cebde121,
     type: 3}
   centerAdjust: {x: 50, y: 30.28837, z: 50}

@@ -10,6 +10,7 @@ using UnityEngine.AI;
 public class TerrainSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject[] terrainPrefabs;
+    [SerializeField] private GameObject destinationPrefab;
     [SerializeField] private Vector3 centerAdjust = new Vector3( 50.0f, 0.0f, 50.0f );
     [SerializeField] private Vector3 spawnExtents = new Vector3( 40.0f, 0.0f, 40.0f );
     [SerializeField] private Vector3 spawnLimits = new Vector3( 50.0f, 0.0f, 50.0f );
@@ -18,6 +19,8 @@ public class TerrainSpawner : MonoBehaviour
     [SerializeField] private bool enableSpawn = true;
     [SerializeField] private Vector3 debugPlayerDist = new Vector3();
     [SerializeField] private float borderWidth = 0.5f;
+	[SerializeField] private int spawnCountdown = 50;
+	[SerializeField] private float earlySpawnChance = 0.025f;
 
     // Going clockwise (looking towards -Y) starting at +X
     [SerializeField] private TerrainSpawner[] terrainNeighbors = { null, null, null, null, null, null, null, null };
@@ -25,11 +28,12 @@ public class TerrainSpawner : MonoBehaviour
 	[SerializeField] private NavMeshLink[] neighborLink = { null, null, null, null };
 #endif
 
+	private static int spawnCount = 0;
 
 	// Start is called before the first frame update
 	void Start()
     {
-        
+		spawnCount++;
     }
 
     // Update is called once per frame
@@ -169,7 +173,20 @@ public class TerrainSpawner : MonoBehaviour
 
     private void SpawnNeighbor( int idx, Vector3 pos )
     {
-        GameObject neighbor = Instantiate( terrainPrefabs[0], pos, Quaternion.identity );
+		if ( destinationPrefab == null && terrainPrefabs.Length == 0 )
+		{
+			return;
+		}
+
+		bool spawnDestination = destinationPrefab && ( spawnCount >= spawnCountdown || Random.Range( 0.0f, 1.0f ) < earlySpawnChance );
+
+		GameObject prefab = spawnDestination ? destinationPrefab : terrainPrefabs[Random.Range( 0, terrainPrefabs.Length )];
+		if ( spawnCountdown > 0 )
+		{
+			spawnCount = spawnCount % spawnCountdown;
+		}
+
+		GameObject neighbor = Instantiate( prefab, pos, Quaternion.identity );
 		TerrainSpawner neighborSpawner = neighbor.GetComponent<TerrainSpawner>();
         if ( neighborSpawner == null )
         {

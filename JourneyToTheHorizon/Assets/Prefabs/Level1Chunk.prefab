@@ -109,6 +109,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   terrainPrefabs:
   - {fileID: 7454379765258777509}
+  destinationPrefab: {fileID: 9214718542395664886, guid: ca4781af0e0b36e40893f901b2f82978,
+    type: 3}
   centerAdjust: {x: 20, y: 30.28837, z: 20}
   spawnExtents: {x: 1, y: 0, z: 1}
   spawnLimits: {x: 20, y: 0, z: 20}
@@ -117,6 +119,8 @@ MonoBehaviour:
   enableSpawn: 1
   debugPlayerDist: {x: 0, y: 0, z: 0}
   borderWidth: 1
+  spawnCountdown: 50
+  earlySpawnChance: 0.025
   terrainNeighbors:
   - {fileID: 0}
   - {fileID: 0}

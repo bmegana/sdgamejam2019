@@ -1527,7 +1527,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Sean Kramer : Programmer'
+  m_Text: 'Sean Kramer : Sloth'
 --- !u!222 &1595375070
 CanvasRenderer:
   m_ObjectHideFlags: 0

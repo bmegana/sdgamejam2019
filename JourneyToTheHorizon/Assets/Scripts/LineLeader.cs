@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class LineLeader : MonoBehaviour
 {
@@ -93,7 +94,11 @@ public class LineLeader : MonoBehaviour
 			else
 			{
 				// GAME OVER
-				//SceneManager.LoadSceneAsync( "MainMenu" );
+#if UNITY_EDITOR
+				EditorApplication.isPlaying = false;
+#else
+				SceneManager.LoadSceneAsync( "MainMenu" );
+#endif
 			}
 		}
 

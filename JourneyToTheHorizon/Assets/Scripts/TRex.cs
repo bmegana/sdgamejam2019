@@ -14,6 +14,9 @@ public class TRex : MonoBehaviour
     private Collider collider;
     private Rigidbody rb;
 
+    public GameObject tRexStill;
+    public GameObject tRexWalking;
+
     public Transform rushPoint;
     private Vector3 initPosition;
     private Quaternion initRotation;
@@ -27,6 +30,9 @@ public class TRex : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         initPosition = transform.position;
         initRotation = transform.rotation;
+
+        tRexStill.SetActive(true);
+        tRexWalking.SetActive(false);
     }
 
     private void Start()
@@ -60,6 +66,8 @@ public class TRex : MonoBehaviour
             {
                 rb.velocity = -rushDirection * rushSpeed;
             }
+            tRexStill.SetActive(false);
+            tRexWalking.SetActive(true);
         }
         else if (rushing && !outOfPoint)
         {
@@ -94,6 +102,9 @@ public class TRex : MonoBehaviour
                         0.0f
                     );
                 }
+
+                tRexStill.SetActive(true);
+                tRexWalking.SetActive(false);
             }
         }
     }

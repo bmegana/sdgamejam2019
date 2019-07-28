@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
 	{
 		if ( collision.gameObject.tag == "Recruit" )
 		{
-			GameObject clone = Instantiate( playerPrefab, collision.transform.position, collision.transform.rotation );
+			GameObject clone = Instantiate( playerPrefab, collision.transform.position, Quaternion.identity );
 			Destroy( collision.gameObject );
 		}
 	}

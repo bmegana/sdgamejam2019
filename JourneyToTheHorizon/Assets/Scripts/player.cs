@@ -42,9 +42,47 @@ public class player : MonoBehaviour {
     }
     void Torch()
     {
-        
+        if (OnCollisionEnter.gameObject.tag == "Fire")
+        {
+            Console.WriteLine("Press 'E' To Light");
+            if (Input.GetAxis("Submit")>0)
+            {
+                RemoveItem.Inventory(Stick);
+                AddItem.Inventory(Torch);
+            }
+        if (OnCollisionEnter.gameObject.tag == "tree")
+            {
+                Console.WriteLine("Press 'F' to Burn");
+                if (Input.GetAxis("axis")> 0)
+                {
+                    Destroy(gameObject(Tree));
+                    Create(gameObject(Fire));
+                }
+            }
+        }
     }
-
+    void Water()
+    {
+        if (OnCollisionEnter.gameObject.tag == "Water")
+        {
+            Console.WriteLine("Press 'E' to collect");
+            if (Input.GetAxis("Submit")>0)
+            {
+                RemoveItem.Inventory(Bucket);
+                AddItem.Inventory(Water);
+            }
+        }
+        if (OnCollisionEnter.gameObject.tag == "Fire")
+        {
+            Console.WriteLine("Press 'Q' to Douse");
+            if (Input.GetAxis("axis")>0)
+            {
+                RemoveItem.Inventory(Water);
+                AddItem.Inventory(Bucket);
+                Destroy(gameObject(Fire));
+            }
+        }
+    }
 
    
 

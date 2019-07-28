@@ -13,8 +13,8 @@ public class Tree : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Tree on fire.");
-            burnEvent.Invoke(transform.position);
+            //Debug.Log("Tree on fire.");
+            //burnEvent.Invoke(transform.position);
         }
     }
 }

@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 7797885196017001597}
   - component: {fileID: 2025959550083197407}
   - component: {fileID: 2025959550083197406}
-  - component: {fileID: 2025959550083197405}
   - component: {fileID: 2025959550083197344}
   - component: {fileID: 5464920656414542364}
   m_Layer: 0
@@ -131,18 +130,6 @@ MonoBehaviour:
   waypointDist: 1
   debugWaypointPrefab: {fileID: 0}
   overrideLeader: 0
---- !u!114 &2025959550083197405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2025959550083197349}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dc6fe6c0bd21034a80795483f21345e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2025959550083197344
 MonoBehaviour:
   m_ObjectHideFlags: 0

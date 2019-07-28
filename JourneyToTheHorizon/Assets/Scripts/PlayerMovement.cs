@@ -47,7 +47,9 @@ public class PlayerMovement : MonoBehaviour
 		}
 		else
 		{
-			rb.velocity = Vector3.zero;
+			Vector2 newVelocity = Vector3.zero;
+			newVelocity.y = rb.velocity.y;
+			rb.velocity = newVelocity;
 		}
 
 		if ( Input.GetAxis( "Fire1" ) > 0 )

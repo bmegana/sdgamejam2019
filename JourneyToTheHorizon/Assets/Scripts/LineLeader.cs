@@ -27,10 +27,21 @@ public class LineLeader : MonoBehaviour
 		if ( overrideLeader )
 		{
 			leaderRoster.Insert( 0, this );
+			overrideLeader = false;
 		}
 		else
 		{
 			leaderRoster.Add( this );
+		}
+
+		if ( leaderRoster[0] != this )
+		{
+			PlayerMovement moveComp = GetComponent<PlayerMovement>();
+			if ( moveComp != null )
+			{
+				moveComp.enabled = false;
+				moveComp.cameraTransform.gameObject.SetActive( false );
+			}
 		}
     }
 
@@ -84,11 +95,6 @@ public class LineLeader : MonoBehaviour
 					moveComp.enabled = true;
 					moveComp.cameraTransform.gameObject.SetActive( true );
 					moveComp.ResetCamera();
-				}
-				Rigidbody rigidbodyComp = successor.gameObject.GetComponent<Rigidbody>();
-				if ( rigidbodyComp != null )
-				{
-					rigidbodyComp.isKinematic = false;
 				}
 			}
 			else

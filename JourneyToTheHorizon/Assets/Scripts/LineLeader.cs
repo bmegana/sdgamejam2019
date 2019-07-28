@@ -85,14 +85,14 @@ public class LineLeader : MonoBehaviour
 
 	private void OnDestroy()
 	{
-        
+
 		if ( leaderRoster[0] == this )
 		{
 			if ( leaderRoster.Count > 1 )
 			{
 				// Transfer control to next in line
 				LineLeader successor = leaderRoster[1];
-                successor.playerDeath.Play();
+				successor.playerDeath.Play();
 				PlayerMovement moveComp = successor.gameObject.GetComponent<PlayerMovement>();
 				if ( moveComp != null )
 				{
@@ -110,6 +110,10 @@ public class LineLeader : MonoBehaviour
 				SceneManager.LoadSceneAsync( "MainMenu" );
 #endif
 			}
+		}
+		else
+		{
+			leaderRoster[0].playerDeath.Play();
 		}
 
 		leaderRoster.Remove( this );

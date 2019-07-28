@@ -1,4 +1,4 @@
-﻿#define LIMIT_TERRAIN_SPAWNING
+﻿//#define LIMIT_TERRAIN_SPAWNING
 
 using System.Collections;
 using System.Collections.Generic;

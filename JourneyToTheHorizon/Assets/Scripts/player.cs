@@ -13,7 +13,9 @@ public class player : MonoBehaviour {
 
        
     }
-    void OnCollisionEnter(Collision Collision)
+
+#if false
+	void OnCollisionEnter(Collision Collision)
     {
         if (Collision.gameObject.tag == "Food")
         {
@@ -63,6 +65,7 @@ public class player : MonoBehaviour {
             }
         }
     }
+#endif
 
     private void OnTriggerEnter(Collider other)
     {

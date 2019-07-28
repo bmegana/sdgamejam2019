@@ -16,7 +16,7 @@ public class Inventory : MonoBehaviour {
             if (items[i] == null)
             {
                 items[i] = itemToAdd;
-                itemImages[i].sprite = itemToAdd.sprite;
+                //itemImages[i].sprite = itemToAdd.sprite;
                 itemImages[i].enabled = true;
                 return;
             }
@@ -36,7 +36,7 @@ public class Inventory : MonoBehaviour {
         }
     }
 }
-}
+
 
 
    

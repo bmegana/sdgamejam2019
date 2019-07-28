@@ -10,6 +10,7 @@ public class VictoryArea : MonoBehaviour
 		LineLeader leader = LineLeader.GetActiveLeader();
 		if ( leader != null && leader.gameObject == other.gameObject )
 		{
+			//MenuManager.DisplayVictoryPopup();
 			SceneManager.LoadSceneAsync( "Ending Scene" );
 		}
 	}

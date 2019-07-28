@@ -53,4 +53,12 @@ public class Boulder : MonoBehaviour
             rb.useGravity = false;
         }
     }
+
+	private void OnCollisionEnter( Collision collision )
+	{
+		if ( collision.transform.tag == "Player" )
+		{
+			Destroy( collision.transform.gameObject );
+		}
+	}
 }

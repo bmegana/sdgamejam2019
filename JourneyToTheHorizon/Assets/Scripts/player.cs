@@ -25,24 +25,7 @@ public class player : MonoBehaviour {
             }
             hunger = 30;
         }
-        
-    }
-
-    void Hunger()
-    {
-        
-        Debug.Log (hunger);
-        hunger--;
-        
-        if (hunger == 0)
-            {
-                //void Destroy(Object Follower)
-            }
-
-    }
-    void Torch()
-    {
-        if (OnCollisionEnter.gameObject.tag == "Fire")
+        if (Collision.gameObject.tag == "Fire")
         {
             Console.WriteLine("Press 'E' To Light");
             if (Input.GetAxis("Submit")>0)
@@ -50,7 +33,7 @@ public class player : MonoBehaviour {
                 RemoveItem.Inventory(Stick);
                 AddItem.Inventory(Torch);
             }
-        if (OnCollisionEnter.gameObject.tag == "tree")
+        if (Collision.gameObject.tag == "tree")
             {
                 Console.WriteLine("Press 'F' to Burn");
                 if (Input.GetAxis("axis")> 0)
@@ -60,10 +43,7 @@ public class player : MonoBehaviour {
                 }
             }
         }
-    }
-    void Water()
-    {
-        if (OnCollisionEnter.gameObject.tag == "Water")
+        if (Collision.gameObject.tag == "Water")
         {
             Console.WriteLine("Press 'E' to collect");
             if (Input.GetAxis("Submit")>0)
@@ -72,7 +52,7 @@ public class player : MonoBehaviour {
                 AddItem.Inventory(Water);
             }
         }
-        if (OnCollisionEnter.gameObject.tag == "Fire")
+        if (Collision.gameObject.tag == "Fire")
         {
             Console.WriteLine("Press 'Q' to Douse");
             if (Input.GetAxis("axis")>0)
@@ -94,6 +74,32 @@ public class player : MonoBehaviour {
     }
 
 
+    void Hunger()
+    {
+        
+        Debug.Log (hunger);
+        hunger--;
+        
+        if (hunger == 0)
+            {
+                //void Destroy(Object Follower)
+            }
+
+    }
+    
+   
+    /*void Rock()
+    {
+        if (OnCollisionEnter.gameObject.tag == "Rock")
+        {
+            Console.WriteLine("Press 'E' to Collect");
+            if (input.GetAxis("Submit")>0)
+            {
+                AddItem.Inventory(Rock);
+            }
+        }
+    }*/
+   
 
 
 }

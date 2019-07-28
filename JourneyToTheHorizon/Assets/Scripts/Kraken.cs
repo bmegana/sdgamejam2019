@@ -7,6 +7,7 @@ public class Kraken : MonoBehaviour
     private int PLAYER_LAYER;
     private int TREE_LAYER;
 
+    public float shootingHeight;
     public float shootingTime;
     private float initShootingTime;
 
@@ -79,8 +80,13 @@ public class Kraken : MonoBehaviour
 
     private void Shoot(Vector3 pos)
     {
+        Vector3 shootingPosition = new Vector3(
+            transform.position.x,
+            transform.position.y + shootingHeight,
+            transform.position.z
+        );
         GameObject waterOrb = Instantiate(
-            waterProjectile, transform.position, new Quaternion()
+            waterProjectile, shootingPosition, new Quaternion()
         );
         
         Rigidbody waterOrbRb = waterOrb.GetComponent<Rigidbody>();

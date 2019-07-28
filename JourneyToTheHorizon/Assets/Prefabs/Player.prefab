@@ -144,6 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 10
   angularSpeed: 360
+  playerPrefab: {fileID: 2025959550083197349}
   cameraTransform: {fileID: 2025959550162469227}
 --- !u!114 &5464920656414542364
 MonoBehaviour:

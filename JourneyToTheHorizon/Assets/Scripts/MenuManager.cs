@@ -7,6 +7,8 @@ using UnityEditor;
 public class MenuManager : MonoBehaviour
 {
 	[SerializeField] private GameObject escMenu;
+	[SerializeField] private GameObject credits;
+	[SerializeField] private GameObject mainMenu;
 
 	private bool wasEscPressed = false;
 
@@ -48,5 +50,14 @@ public class MenuManager : MonoBehaviour
 #else
 		Application.Quit();
 #endif
+	}
+
+	public void ToggleCredits( bool enable )
+	{
+		if ( credits != null  && mainMenu != null )
+		{
+			mainMenu.SetActive( !enable );
+			credits.SetActive( enable );
+		}
 	}
 }

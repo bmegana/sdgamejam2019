@@ -25,6 +25,10 @@ public class Projectile : MonoBehaviour
         GameObject entity = col.gameObject;
         if (entity.CompareTag("Player") || entity.CompareTag("Tree"))
         {
+            if (entity.CompareTag("Player"))
+            {
+                Destroy(entity);
+            }
             Destroy(gameObject);
         }
     }

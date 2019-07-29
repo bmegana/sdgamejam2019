@@ -202,6 +202,6 @@ public class LineLeader : MonoBehaviour
 
 	public static int GetLeaderRosterSize()
 	{
-		return leaderRoster.Count;
+		return leaderRoster != null ? leaderRoster.Count : 0;
 	}
 }

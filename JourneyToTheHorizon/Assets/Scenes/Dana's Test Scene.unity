@@ -715,21 +715,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2025959550083197406, guid: 8b23f177a3369c746838192d78b413e8,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2025959550083197406, guid: 8b23f177a3369c746838192d78b413e8,
-        type: 3}
-      propertyPath: overrideLeader
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2025959550083197406, guid: 8b23f177a3369c746838192d78b413e8,
-        type: 3}
-      propertyPath: followerPadding
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 2025959550083197344, guid: 8b23f177a3369c746838192d78b413e8,
         type: 3}
       propertyPath: animator

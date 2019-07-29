@@ -81,11 +81,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerDeath: {fileID: 4898085887549738230}
-  targetPathLength: 40
+  targetPathLength: 160
   followerPadding: 4
   waypointDist: 1
   debugWaypointPrefab: {fileID: 0}
-  overrideLeader: 0
+  overrideLeader: 1
 --- !u!114 &2025959550083197344
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -199,4 +199,9 @@ public class LineLeader : MonoBehaviour
 		}
 		return leader.leaderPath[leader.leaderPath.Count - 1];
 	}
+
+	public static int GetLeaderRosterSize()
+	{
+		return leaderRoster.Count;
+	}
 }

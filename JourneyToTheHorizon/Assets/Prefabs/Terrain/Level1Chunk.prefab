@@ -330,7 +330,7 @@ MonoBehaviour:
   debugPlayerDist: {x: 0, y: 0, z: 0}
   borderWidth: 1
   spawnCountdown: 50
-  earlySpawnChance: 0.025
+  earlySpawnChance: 0.05
   terrainNeighbors:
   - {fileID: 0}
   - {fileID: 0}
